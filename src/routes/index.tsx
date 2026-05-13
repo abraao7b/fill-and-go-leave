@@ -44,13 +44,13 @@ function dataPorExtenso(date: Date) {
 }
 
 function Index() {
-  const [nome, setNome] = useState("Abraão de Oliveira Fabiano Ferreira da Silva");
+  const [nome, setNome] = useState("");
   const [sexo, setSexo] = useState<"masculino" | "feminino">("masculino");
-  const [rg, setRg] = useState("52528030-3");
-  const [endereco, setEndereco] = useState("Wild Jose de Souza Nº 291");
-  const [bairro, setBairro] = useState("Centro");
-  const [dataTrabalhada, setDataTrabalhada] = useState("2026-04-18");
-  const [dataFolga, setDataFolga] = useState("2026-05-08");
+  const [rg, setRg] = useState("");
+  const [endereco, setEndereco] = useState("");
+  const [bairro, setBairro] = useState("");
+  const [dataTrabalhada, setDataTrabalhada] = useState("");
+  const [dataFolga, setDataFolga] = useState("");
   const [previewOpen, setPreviewOpen] = useState(false);
 
   const gerarPDF = () => {
@@ -101,7 +101,7 @@ function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-background py-10 px-4 pb-28">
+    <div className="min-h-screen bg-background py-6 sm:py-10 px-3 sm:px-4 pb-24 sm:pb-28">
       <div className="mx-auto max-w-3xl space-y-6">
         <header className="text-center space-y-2">
           <h1 className="text-3xl font-bold text-foreground">Solicitação de Folga</h1>
@@ -114,12 +114,12 @@ function Index() {
           <CardHeader>
             <CardTitle>Dados do funcionário</CardTitle>
           </CardHeader>
-          <CardContent className="grid gap-4 md:grid-cols-2">
-            <div className="md:col-span-2">
+          <CardContent className="grid gap-4 sm:grid-cols-6">
+            <div className="sm:col-span-6 space-y-1.5">
               <Label htmlFor="nome">Nome do funcionário</Label>
               <Input id="nome" className="field-input" value={nome} onChange={(e) => setNome(e.target.value)} />
             </div>
-            <div>
+            <div className="sm:col-span-2 space-y-1.5">
               <Label htmlFor="sexo">Sexo</Label>
               <Select value={sexo} onValueChange={(v) => setSexo(v as "masculino" | "feminino")}>
                 <SelectTrigger id="sexo" className="field-input">
@@ -131,23 +131,23 @@ function Index() {
                 </SelectContent>
               </Select>
             </div>
-            <div>
+            <div className="sm:col-span-4 space-y-1.5">
               <Label htmlFor="rg">Número do RG</Label>
               <Input id="rg" className="field-input" value={rg} onChange={(e) => setRg(e.target.value)} />
             </div>
-            <div className="md:col-span-2">
+            <div className="sm:col-span-4 space-y-1.5">
               <Label htmlFor="endereco">Rua e número</Label>
               <Input id="endereco" className="field-input" value={endereco} onChange={(e) => setEndereco(e.target.value)} />
             </div>
-            <div className="md:col-span-2">
+            <div className="sm:col-span-2 space-y-1.5">
               <Label htmlFor="bairro">Bairro</Label>
               <Input id="bairro" className="field-input" value={bairro} onChange={(e) => setBairro(e.target.value)} />
             </div>
-            <div>
+            <div className="sm:col-span-3 space-y-1.5">
               <Label htmlFor="dt">Data trabalhada</Label>
               <Input id="dt" type="date" className="field-input" value={dataTrabalhada} onChange={(e) => setDataTrabalhada(e.target.value)} />
             </div>
-            <div>
+            <div className="sm:col-span-3 space-y-1.5">
               <Label htmlFor="df">Data da folga</Label>
               <Input id="df" type="date" className="field-input" value={dataFolga} onChange={(e) => setDataFolga(e.target.value)} />
             </div>
@@ -156,11 +156,11 @@ function Index() {
       </div>
 
       {/* Bottom action bar */}
-      <div className="fixed bottom-0 left-0 right-0 flex justify-between items-center px-6 py-4 bg-background/80 backdrop-blur border-t border-border/60">
-        <Button size="lg" variant="secondary" onClick={() => setPreviewOpen(true)}>
+      <div className="fixed bottom-0 left-0 right-0 flex justify-between items-center gap-3 px-3 sm:px-6 py-3 sm:py-4 bg-background/80 backdrop-blur border-t border-border/60">
+        <Button size="lg" variant="secondary" className="flex-1 sm:flex-none" onClick={() => setPreviewOpen(true)}>
           Pré-visualizar
         </Button>
-        <Button size="lg" onClick={gerarPDF}>
+        <Button size="lg" className="flex-1 sm:flex-none" onClick={gerarPDF}>
           Gerar PDF
         </Button>
       </div>
