@@ -5,12 +5,4 @@
 //     error logger plugins, and sandbox detection (port/host/strictPort).
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-// Use Vercel target only when building on Vercel; otherwise default to Cloudflare
-// so the Lovable preview (which runs on Cloudflare Workers) keeps working.
-const isVercel = !!process.env.VERCEL;
-
-export default defineConfig({
-  tanstackStart: {
-    target: isVercel ? "vercel" : "cloudflare",
-  },
-});
+export default defineConfig({});
