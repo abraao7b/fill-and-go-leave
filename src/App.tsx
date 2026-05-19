@@ -1,5 +1,60 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import jsPDF from "jspdf";
+
+type Theme = "ocean" | "light" | "violet";
+
+const THEMES: Record<Theme, Record<string, string>> = {
+  ocean: {
+    "--background": "oklch(0.22 0.06 260)",
+    "--foreground": "oklch(0.97 0.01 250)",
+    "--card": "oklch(0.27 0.06 260)",
+    "--card-foreground": "oklch(0.97 0.01 250)",
+    "--primary": "oklch(0.7 0.15 245)",
+    "--primary-foreground": "oklch(0.15 0.04 260)",
+    "--secondary": "oklch(0.32 0.06 260)",
+    "--secondary-foreground": "oklch(0.97 0.01 250)",
+    "--muted": "oklch(0.30 0.05 260)",
+    "--muted-foreground": "oklch(0.75 0.03 250)",
+    "--border": "oklch(0.4 0.05 260)",
+    "--input": "oklch(0.35 0.05 260)",
+    "--ring": "oklch(0.65 0.12 245)",
+  },
+  light: {
+    "--background": "oklch(0.98 0.005 250)",
+    "--foreground": "oklch(0.20 0.03 260)",
+    "--card": "oklch(1 0 0)",
+    "--card-foreground": "oklch(0.20 0.03 260)",
+    "--primary": "oklch(0.55 0.18 250)",
+    "--primary-foreground": "oklch(0.98 0.005 250)",
+    "--secondary": "oklch(0.94 0.01 250)",
+    "--secondary-foreground": "oklch(0.20 0.03 260)",
+    "--muted": "oklch(0.94 0.01 250)",
+    "--muted-foreground": "oklch(0.45 0.02 250)",
+    "--border": "oklch(0.88 0.01 250)",
+    "--input": "oklch(0.92 0.01 250)",
+    "--ring": "oklch(0.55 0.18 250)",
+  },
+  violet: {
+    "--background": "oklch(0.20 0.05 300)",
+    "--foreground": "oklch(0.97 0.01 300)",
+    "--card": "oklch(0.26 0.07 300)",
+    "--card-foreground": "oklch(0.97 0.01 300)",
+    "--primary": "oklch(0.70 0.18 310)",
+    "--primary-foreground": "oklch(0.15 0.04 300)",
+    "--secondary": "oklch(0.32 0.07 300)",
+    "--secondary-foreground": "oklch(0.97 0.01 300)",
+    "--muted": "oklch(0.30 0.06 300)",
+    "--muted-foreground": "oklch(0.78 0.03 300)",
+    "--border": "oklch(0.42 0.06 300)",
+    "--input": "oklch(0.36 0.06 300)",
+    "--ring": "oklch(0.70 0.18 310)",
+  },
+};
+
+function applyTheme(theme: Theme) {
+  const root = document.documentElement;
+  Object.entries(THEMES[theme]).forEach(([k, v]) => root.style.setProperty(k, v));
+}
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -47,6 +102,11 @@ export default function App() {
   const [dataTrabalhada, setDataTrabalhada] = useState("");
   const [dataFolga, setDataFolga] = useState("");
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [theme, setTheme] = useState<Theme>("ocean");
+
+  useEffect(() => {
+    applyTheme(theme);
+  }, [theme]);
 
   const gerarPDF = () => {
     const doc = new jsPDF({ unit: "mm", format: "a4" });
@@ -150,11 +210,39 @@ export default function App() {
         </Card>
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 flex justify-between items-center gap-3 px-3 sm:px-6 py-3 sm:py-4 bg-background/80 backdrop-blur border-t border-border/60">
-        <Button size="lg" variant="secondary" className="flex-1 sm:flex-none" onClick={() => setPreviewOpen(true)}>
+      <div className="fixed bottom-0 left-0 right-0 flex flex-wrap justify-between items-center gap-3 px-3 sm:px-6 py-3 sm:py-4 bg-background/80 backdrop-blur border-t border-border/60">
+        <Button size="lg" variant="secondary" onClick={() => setPreviewOpen(true)}>
           Pré-visualizar
         </Button>
-        <Button size="lg" className="flex-1 sm:flex-none" onClick={gerarPDF}>
+
+        <div className="flex items-center gap-2" role="group" aria-label="Selecionar tema">
+          <button
+            type="button"
+            onClick={() => setTheme("ocean")}
+            aria-label="Tema Oceano"
+            aria-pressed={theme === "ocean"}
+            className={`h-8 w-8 rounded-full border-2 transition-transform hover:scale-110 ${theme === "ocean" ? "border-foreground scale-110" : "border-border"}`}
+            style={{ background: "linear-gradient(135deg, oklch(0.22 0.06 260), oklch(0.7 0.15 245))" }}
+          />
+          <button
+            type="button"
+            onClick={() => setTheme("light")}
+            aria-label="Tema Claro"
+            aria-pressed={theme === "light"}
+            className={`h-8 w-8 rounded-full border-2 transition-transform hover:scale-110 ${theme === "light" ? "border-foreground scale-110" : "border-border"}`}
+            style={{ background: "linear-gradient(135deg, oklch(0.98 0.005 250), oklch(0.55 0.18 250))" }}
+          />
+          <button
+            type="button"
+            onClick={() => setTheme("violet")}
+            aria-label="Tema Violeta"
+            aria-pressed={theme === "violet"}
+            className={`h-8 w-8 rounded-full border-2 transition-transform hover:scale-110 ${theme === "violet" ? "border-foreground scale-110" : "border-border"}`}
+            style={{ background: "linear-gradient(135deg, oklch(0.20 0.05 300), oklch(0.70 0.18 310))" }}
+          />
+        </div>
+
+        <Button size="lg" onClick={gerarPDF}>
           Gerar PDF
         </Button>
       </div>
