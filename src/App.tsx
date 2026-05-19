@@ -102,6 +102,11 @@ export default function App() {
   const [dataTrabalhada, setDataTrabalhada] = useState("");
   const [dataFolga, setDataFolga] = useState("");
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [theme, setTheme] = useState<Theme>("ocean");
+
+  useEffect(() => {
+    applyTheme(theme);
+  }, [theme]);
 
   const gerarPDF = () => {
     const doc = new jsPDF({ unit: "mm", format: "a4" });
