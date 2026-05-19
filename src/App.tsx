@@ -1,4 +1,3 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import jsPDF from "jspdf";
 import { Input } from "@/components/ui/input";
@@ -24,10 +23,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-export const Route = createFileRoute("/")({
-  component: Index,
-});
-
 const MESES = [
   "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
   "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro",
@@ -43,7 +38,7 @@ function dataPorExtenso(date: Date) {
   return `Sete Barras, ${String(date.getDate()).padStart(2, "0")} de ${MESES[date.getMonth()]} de ${date.getFullYear()}`;
 }
 
-function Index() {
+export default function App() {
   const [nome, setNome] = useState("");
   const [sexo, setSexo] = useState<"masculino" | "feminino">("masculino");
   const [rg, setRg] = useState("");
@@ -155,7 +150,6 @@ function Index() {
         </Card>
       </div>
 
-      {/* Bottom action bar */}
       <div className="fixed bottom-0 left-0 right-0 flex justify-between items-center gap-3 px-3 sm:px-6 py-3 sm:py-4 bg-background/80 backdrop-blur border-t border-border/60">
         <Button size="lg" variant="secondary" className="flex-1 sm:flex-none" onClick={() => setPreviewOpen(true)}>
           Pré-visualizar
