@@ -1,5 +1,60 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import jsPDF from "jspdf";
+
+type Theme = "ocean" | "light" | "violet";
+
+const THEMES: Record<Theme, Record<string, string>> = {
+  ocean: {
+    "--background": "oklch(0.22 0.06 260)",
+    "--foreground": "oklch(0.97 0.01 250)",
+    "--card": "oklch(0.27 0.06 260)",
+    "--card-foreground": "oklch(0.97 0.01 250)",
+    "--primary": "oklch(0.7 0.15 245)",
+    "--primary-foreground": "oklch(0.15 0.04 260)",
+    "--secondary": "oklch(0.32 0.06 260)",
+    "--secondary-foreground": "oklch(0.97 0.01 250)",
+    "--muted": "oklch(0.30 0.05 260)",
+    "--muted-foreground": "oklch(0.75 0.03 250)",
+    "--border": "oklch(0.4 0.05 260)",
+    "--input": "oklch(0.35 0.05 260)",
+    "--ring": "oklch(0.65 0.12 245)",
+  },
+  light: {
+    "--background": "oklch(0.98 0.005 250)",
+    "--foreground": "oklch(0.20 0.03 260)",
+    "--card": "oklch(1 0 0)",
+    "--card-foreground": "oklch(0.20 0.03 260)",
+    "--primary": "oklch(0.55 0.18 250)",
+    "--primary-foreground": "oklch(0.98 0.005 250)",
+    "--secondary": "oklch(0.94 0.01 250)",
+    "--secondary-foreground": "oklch(0.20 0.03 260)",
+    "--muted": "oklch(0.94 0.01 250)",
+    "--muted-foreground": "oklch(0.45 0.02 250)",
+    "--border": "oklch(0.88 0.01 250)",
+    "--input": "oklch(0.92 0.01 250)",
+    "--ring": "oklch(0.55 0.18 250)",
+  },
+  violet: {
+    "--background": "oklch(0.20 0.05 300)",
+    "--foreground": "oklch(0.97 0.01 300)",
+    "--card": "oklch(0.26 0.07 300)",
+    "--card-foreground": "oklch(0.97 0.01 300)",
+    "--primary": "oklch(0.70 0.18 310)",
+    "--primary-foreground": "oklch(0.15 0.04 300)",
+    "--secondary": "oklch(0.32 0.07 300)",
+    "--secondary-foreground": "oklch(0.97 0.01 300)",
+    "--muted": "oklch(0.30 0.06 300)",
+    "--muted-foreground": "oklch(0.78 0.03 300)",
+    "--border": "oklch(0.42 0.06 300)",
+    "--input": "oklch(0.36 0.06 300)",
+    "--ring": "oklch(0.70 0.18 310)",
+  },
+};
+
+function applyTheme(theme: Theme) {
+  const root = document.documentElement;
+  Object.entries(THEMES[theme]).forEach(([k, v]) => root.style.setProperty(k, v));
+}
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
