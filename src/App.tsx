@@ -210,11 +210,39 @@ export default function App() {
         </Card>
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 flex justify-between items-center gap-3 px-3 sm:px-6 py-3 sm:py-4 bg-background/80 backdrop-blur border-t border-border/60">
-        <Button size="lg" variant="secondary" className="flex-1 sm:flex-none" onClick={() => setPreviewOpen(true)}>
+      <div className="fixed bottom-0 left-0 right-0 flex flex-wrap justify-between items-center gap-3 px-3 sm:px-6 py-3 sm:py-4 bg-background/80 backdrop-blur border-t border-border/60">
+        <Button size="lg" variant="secondary" onClick={() => setPreviewOpen(true)}>
           Pré-visualizar
         </Button>
-        <Button size="lg" className="flex-1 sm:flex-none" onClick={gerarPDF}>
+
+        <div className="flex items-center gap-2" role="group" aria-label="Selecionar tema">
+          <button
+            type="button"
+            onClick={() => setTheme("ocean")}
+            aria-label="Tema Oceano"
+            aria-pressed={theme === "ocean"}
+            className={`h-8 w-8 rounded-full border-2 transition-transform hover:scale-110 ${theme === "ocean" ? "border-foreground scale-110" : "border-border"}`}
+            style={{ background: "linear-gradient(135deg, oklch(0.22 0.06 260), oklch(0.7 0.15 245))" }}
+          />
+          <button
+            type="button"
+            onClick={() => setTheme("light")}
+            aria-label="Tema Claro"
+            aria-pressed={theme === "light"}
+            className={`h-8 w-8 rounded-full border-2 transition-transform hover:scale-110 ${theme === "light" ? "border-foreground scale-110" : "border-border"}`}
+            style={{ background: "linear-gradient(135deg, oklch(0.98 0.005 250), oklch(0.55 0.18 250))" }}
+          />
+          <button
+            type="button"
+            onClick={() => setTheme("violet")}
+            aria-label="Tema Violeta"
+            aria-pressed={theme === "violet"}
+            className={`h-8 w-8 rounded-full border-2 transition-transform hover:scale-110 ${theme === "violet" ? "border-foreground scale-110" : "border-border"}`}
+            style={{ background: "linear-gradient(135deg, oklch(0.20 0.05 300), oklch(0.70 0.18 310))" }}
+          />
+        </div>
+
+        <Button size="lg" onClick={gerarPDF}>
           Gerar PDF
         </Button>
       </div>
